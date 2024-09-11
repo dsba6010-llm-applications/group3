@@ -2,3 +2,5 @@ python-dotenv==1.0.0
 streamlit==1.37.0
 openai==1.37.1
 modal==0.63.57
+pytest-requests==0.3.0
+urllib3==1.26.15

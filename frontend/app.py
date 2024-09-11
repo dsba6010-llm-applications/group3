@@ -6,7 +6,7 @@ import toml
 
 st.title("Modal Llama 3 Instruct Deployment")
 
-api_url = st.secrets["MODAL_BASE_URL"]
+api_url = st.secrets["MODAL_BASE_URL"] + "/v1"
 
 # Set API key from Streamlit secrets
 client = OpenAI(api_key=st.secrets["DSBA_LLAMA3_KEY"], base_url=api_url)
