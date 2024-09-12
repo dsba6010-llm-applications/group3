@@ -83,9 +83,9 @@ Together they dined, a messy entwine.
 >First, create the `frontend/.streamlit/secrets.toml` directory and file such that:
 >```toml
 >DSBA_LLAMA3_KEY="<your key>"
->MODAL_BASE_URL="https://<your url>--vllm-openai-compatible-serve.modal.run" (not including 'v1/'). 
+>MODAL_BASE_URL="https://<your url>--vllm-openai-compatible-serve.modal.run"  
 >```
->This will use your LLM serving endpoint created above.
+>This will use your LLM serving endpoint created above. Do not include 'v1/' in the URL.
 
 ### To run locally:
 
