@@ -87,6 +87,10 @@ Together they dined, a messy entwine.
 >```
 >This will use your LLM serving endpoint created above. Do not include 'v1/' in the URL.
 
+See the [Serving the Llama3-8b-instruct on Modal](https://github.com/dsba6010-llm-applications/group3/edit/main/README.md#%EF%B8%8F-serving-the-llama3-8b-instruct-on-modal) section to create the LLM endpoint on Modal.  
+
+Make sure your endpoint is running before continuing.  
+
 ### To run locally:
 
 ```bash
@@ -95,7 +99,7 @@ $ python -m streamlit run frontend/app.py
 
 ### To run on Modal:
 
-See "Serving the Llama3-8b-instruct on Modal" section to create the LLM serving endpoint on Modal.
+
 
 #### You can run a temporary "dev" environment to test:
 
