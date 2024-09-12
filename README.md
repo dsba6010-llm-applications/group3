@@ -80,7 +80,7 @@ Together they dined, a messy entwine.
 
 ## 🤖 Streamlit Chatbot
 >[!IMPORTANT]
->First, create the `frontend/.streamlit/secrets.toml` directory and file such that:
+>First, create a `.streamlit/secrets.toml` file such that:
 >```toml
 >DSBA_LLAMA3_KEY="<your key>"
 >MODAL_BASE_URL="https://<your url>--vllm-openai-compatible-serve.modal.run"  
