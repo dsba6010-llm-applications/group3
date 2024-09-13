@@ -20,6 +20,8 @@ import subprocess
 from pathlib import Path
 
 import modal
+from langfuse.decorators import observe
+from langfuse.openai import openai
 
 # ## Define container dependencies
 #

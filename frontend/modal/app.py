@@ -5,6 +5,8 @@ import requests
 import time
 import toml
 import os
+from langfuse.decorators import observe
+from langfuse.openai import openai
 
 st.title("Modal Llama 3 Instruct Deployment")
 

@@ -4,3 +4,4 @@ openai==1.37.1
 modal==0.63.57
 pytest-requests==0.3.0
 urllib3==1.26.15
+langfuse==2.48.0

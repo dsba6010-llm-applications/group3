@@ -3,10 +3,14 @@ from openai import OpenAI
 import requests
 import time
 import toml
+from langfuse.decorators import observe
+from langfuse.openai import openai
+
 
 st.title("Modal Llama 3 Instruct Deployment")
 
 api_url = st.secrets["MODAL_BASE_URL"] + "/v1"
+public_key = st.secrets["LANGFUSE_PUBLIC_KEY"]
 
 # Set API key from Streamlit secrets
 client = OpenAI(api_key=st.secrets["DSBA_LLAMA3_KEY"], base_url=api_url)
@@ -58,47 +62,51 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Accept user input
-if prompt := st.chat_input("What is up?"):
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    # Display user message in chat message container
-    with st.chat_message("user"):
-        st.markdown(prompt)
+@observe()
+def input():
+    if prompt := st.chat_input("What is up?"):
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        # Display user message in chat message container
+        with st.chat_message("user"):
+            st.markdown(prompt)
 
-    start_time = time.time()
-    # Display assistant response in chat message container
-    with st.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        try:
-            stream = client.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=[
-                    {"role": "system", "content": system_prompt}
-                ] + [
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-                stream=True,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                top_p=top_p,
-                presence_penalty=presence_penalty,
-                frequency_penalty=frequency_penalty,
-            )
-            for chunk in stream:
-                full_response += chunk.choices[0].delta.content or ""
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
+        start_time = time.time()
+        # Display assistant response in chat message container
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            try:
+                stream = client.chat.completions.create(
+                    model=st.session_state["openai_model"],
+                    messages=[
+                        {"role": "system", "content": system_prompt}
+                    ] + [
+                        {"role": m["role"], "content": m["content"]}
+                        for m in st.session_state.messages
+                    ],
+                    stream=True,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    top_p=top_p,
+                    presence_penalty=presence_penalty,
+                    frequency_penalty=frequency_penalty,
+                )
+                for chunk in stream:
+                    full_response += chunk.choices[0].delta.content or ""
+                    message_placeholder.markdown(full_response + "▌")
+                message_placeholder.markdown(full_response)
 
-            # Add latency print statement
-            end_time = time.time()
-            latency = end_time - start_time
-            tokens = len(full_response.split()) + 1
-            st.info(f"Latency: {tokens / latency:.2f} tokens per seconds")
+                # Add latency print statement
+                end_time = time.time()
+                latency = end_time - start_time
+                tokens = len(full_response.split()) + 1
+                st.info(f"Latency: {tokens / latency:.2f} tokens per seconds")
 
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
-            full_response = "I apologize, but I encountered an error while processing your request."
-        
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
+                full_response = "I apologize, but I encountered an error while processing your request."
+            
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+input()
