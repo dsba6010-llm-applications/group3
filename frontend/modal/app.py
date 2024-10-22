@@ -12,7 +12,7 @@ load_dotenv()
 
 base_url = os.environ.get("MODAL_BASE_URL")
 token = os.environ.get("DSBA_LLAMA3_KEY")
-api_url = str(base_url) + "/v1"
+api_url = base_url + "/v1"
 
 # Set API key from Streamlit secrets
 client = OpenAI(api_key=token, base_url=api_url)

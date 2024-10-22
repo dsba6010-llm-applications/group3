@@ -1,6 +1,6 @@
 from langchain_core.messages import ToolMessage
 from langchain_core.runnables import RunnableLambda
-from agent.nodes.tool_node import ToolNode
+from backend.src.agent.nodes.tool_node import ToolNode
 from langgraph.graph import add_messages
 from typing import Union
 

@@ -3,6 +3,8 @@ streamlit==1.37.0
 openai==1.37.1
 modal==0.63.57
 pytest-requests==0.3.0
-urllib3==1.26.15
-langchain_core
-langgraph
+urllib3==2.0.7
+langchain_community==0.3.3
+faiss-cpu==1.9.0
+tiktoken==0.8.0
+

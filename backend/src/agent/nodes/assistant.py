@@ -1,5 +1,5 @@
 from langchain_core.runnables import Runnable, RunnableConfig
-from agent.state import State
+from backend.src.agent.state import State
 
 class Assistant:
     def __init__(self, runnable: Runnable, persona: str=None):

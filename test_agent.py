@@ -1,5 +1,5 @@
-from agent.graph import graph
-from agent.utils import _print_event
+from backend.src.agent.graph import graph
+from backend.src.agent.utils import _print_event
 import uuid
 from langchain_core.messages import ToolMessage
 

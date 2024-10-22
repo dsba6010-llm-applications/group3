@@ -3,15 +3,14 @@ from langchain_core.tools import tool
 import json
 from typing import Any, Dict
 from langchain_core.runnables import RunnableConfig
-from agent.ally_llm import AllyChat
 import os
-
+from openai import OpenAI
 from operator import itemgetter
 from langchain.schema.runnable import RunnableMap    
 from langchain.schema import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 from langchain_core.prompts import ChatPromptTemplate
-from agent.rag import load_faiss_store
+from backend.src.agent.rag import load_faiss_store
 
 def getTDMAccessToken():
     url = "https://qa.api.ally.com/v1/access/token"
@@ -105,7 +104,10 @@ def answer_question(query: str):
     Returns:
         str: response of user query fetched through RAG
     """
-    llm = AllyChat()
+    base_url = os.environ.get("MODAL_BASE_URL")
+    token = os.environ.get("DSBA_LLAMA3_KEY")
+    api_url = base_url + "/v1"  
+    llm = OpenAI(api_key=token, base_url=api_url)
     path = os.path.dirname(os.path.abspath(__file__)) + "/../"
     db = load_faiss_store(path+"faiss_store/", llm)
     query_embedding = llm._generate_embeddings(query)
